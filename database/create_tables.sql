@@ -1,8 +1,3 @@
--- ============================================================
--- DATABASE: pet_portrait_prints
--- MySQL / MariaDB compatible
--- ============================================================
-
 CREATE DATABASE IF NOT EXISTS pet_portrait_prints
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
