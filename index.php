@@ -2,7 +2,7 @@
 
 <div class="hero">
     <h1>Welcome to Pet Portrait Prints</h1>
-    <p class="tagline">Custom illustrated portraits of your beloved pets — digital downloads, framed prints, mugs, and shirts.</p>
+    <p class="tagline">Custom illustrated portraits of your beloved pets Digital downloads, framed prints, mugs, and shirts.</p>
 </div>
 
 <div class="features">
