@@ -189,6 +189,10 @@ form {
     margin-right: 5px;
 }
 
+.status-completed {
+    background-color: #FFF9C4 !important;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 10px;

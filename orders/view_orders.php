@@ -35,7 +35,8 @@
         }
 
         foreach ($orders as $order) {
-            echo '<tr>';
+            $rowClass = ($order['order_status'] === 'Completed') ? ' class="status-completed"' : '';
+            echo '<tr' . $rowClass . '>';
             echo '<td>' . escape($order['order_id']) . '</td>';
             echo '<td>' . escape($order['customer_name']) . '</td>';
             echo '<td>' . escape($order['pet_name']) . '</td>';
