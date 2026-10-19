@@ -2,7 +2,7 @@
 
 <div class="hero">
     <h1>Pet Portrait Prints</h1>
-    <p class="tagline">Custom illustrated portraits of your pets — digital downloads, prints, mugs & shirts.</p>
+    <p class="tagline">Custom illustrated portraits of your pets Digital downloads, prints, mugs & shirts.</p>
 </div>
 
 <div class="dashboard">
