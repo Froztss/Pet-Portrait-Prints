@@ -1,0 +1,184 @@
+/* Simple, clean CSS for Pet Portrait Prints */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFFFFF;
+    color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+nav a {
+    color: #3366CC;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    background-color: #FFFFFF;
+    min-height: 500px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #CCCCCC;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #F0F0F0;
+    font-size: 14px;
+}
+
+td {
+    font-size: 14px;
+}
+
+tr:nth-child(even) {
+    background-color: #FAFAFA;
+}
+
+a.button,
+input[type="submit"],
+button {
+    background-color: #3366CC;
+    color: #FFFFFF;
+    border: 1px solid #3366CC;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a.button:hover,
+input[type="submit"]:hover,
+button:hover {
+    background-color: #254E99;
+    border-color: #254E99;
+}
+
+a.link {
+    color: #3366CC;
+    text-decoration: none;
+}
+
+a.link:hover {
+    text-decoration: underline;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #CCCCCC;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.input-small {
+    width: 150px;
+}
+
+.input-medium {
+    width: 250px;
+}
+
+.flash {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #CCCCCC;
+    font-size: 14px;
+}
+
+.flash-success {
+    background-color: #DFF0D8;
+    border-color: #D6E5B8;
+    color: #3C763D;
+}
+
+.flash-error {
+    background-color: #F2DEDE;
+    border-color: #EBCCCC;
+    color: #A94442;
+}
+
+.business-choice {
+    background-color: yellow;
+    padding: 5px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.action-links {
+    white-space: nowrap;
+}
+
+.action-links a {
+    margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    th, td {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+}
