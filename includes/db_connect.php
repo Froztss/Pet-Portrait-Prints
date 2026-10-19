@@ -3,6 +3,13 @@
 
 session_start();
 
+// Dynamic base URL detection
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$baseUrl = $protocol . $host . ($scriptDir === '/' ? '/' : rtrim($scriptDir, '/') . '/');
+define('BASE_URL', $baseUrl);
+
 $host = 'localhost';
 $db   = 'pet_portrait_prints';
 $user = 'root';

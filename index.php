@@ -21,10 +21,10 @@
 
     <h2 style="margin-top: 30px;">Quick Links</h2>
     <p>
-        <a class="button" href="/AppDev_10_19_2026/customers/view_customers.php">View All Customers</a>
-        <a class="button" href="/AppDev_10_19_2026/customers/add_customer.php">Add New Customer</a>
-        <a class="button" href="/AppDev_10_19_2026/orders/view_orders.php">View All Orders</a>
-        <a class="button" href="/AppDev_10_19_2026/orders/add_order.php">Add New Order</a>
+        <a class="button" href="<?php echo BASE_URL; ?>customers/view_customers.php">View All Customers</a>
+        <a class="button" href="<?php echo BASE_URL; ?>customers/add_customer.php">Add New Customer</a>
+        <a class="button" href="<?php echo BASE_URL; ?>orders/view_orders.php">View All Orders</a>
+        <a class="button" href="<?php echo BASE_URL; ?>orders/add_order.php">Add New Order</a>
     </p>
 </div>
 
