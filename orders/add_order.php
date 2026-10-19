@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             VALUES (?, ?, ?, ?, ?, ?)
         ");
         $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus]);
-        setFlash('success', 'Order added successfully!');
+        setFlash('success', 'Order added: ' . htmlspecialchars($petName, ENT_QUOTES, 'UTF-8'));
         header('Location: view_orders.php');
         exit;
     } catch (PDOException $e) {
