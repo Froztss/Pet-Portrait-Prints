@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
 
+// Dropdown choices
+$petTypes = ['Dog', 'Cat', 'Rabbit', 'Bird', 'Hamster', 'Guinea Pig', 'Horse', 'Reptile', 'Other'];
+$portraitStyles = ['Watercolor', 'Cartoon', 'Pencil Sketch', 'Oil Painting', 'Pop Art', 'Minimalist', 'Royal/Renaissance', 'Other'];
+
 // Get order ID from URL
 $id = $_GET['id'] ?? 0;
 $id = (int)$id;
@@ -25,14 +29,42 @@ if (!$order) {
 $custStmt = $pdo->query("SELECT * FROM customers ORDER BY customer_name");
 $customers = $custStmt->fetchAll();
 
+// Determine selected values for dropdowns (handle custom values)
+$savedPetType = $order['pet_type'];
+$savedStyle = $order['portrait_style'];
+$petTypeSelected = in_array($savedPetType, $petTypes) ? $savedPetType : 'Other';
+$styleSelected = in_array($savedStyle, $portraitStyles) ? $savedStyle : 'Other';
+$petTypeOtherValue = ($petTypeSelected === 'Other') ? $savedPetType : '';
+$styleOtherValue = ($styleSelected === 'Other') ? $savedStyle : '';
+
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customerId    = (int)($_POST['customer_id'] ?? 0);
     $petName       = trim($_POST['pet_name'] ?? '');
     $petType       = trim($_POST['pet_type'] ?? '');
+    $petTypeOther  = trim($_POST['pet_type_other'] ?? '');
     $portraitStyle = trim($_POST['portrait_style'] ?? '');
+    $styleOther    = trim($_POST['portrait_style_other'] ?? '');
     $price         = $_POST['price'] ?? '';
     $orderStatus   = trim($_POST['order_status'] ?? 'Pending');
+
+    // Resolve "Other" values
+    if ($petType === 'Other') {
+        if ($petTypeOther === '') {
+            setFlash('error', 'Please specify the pet type.');
+            header('Location: edit_order.php?id=' . $id);
+            exit;
+        }
+        $petType = $petTypeOther;
+    }
+    if ($portraitStyle === 'Other') {
+        if ($styleOther === '') {
+            setFlash('error', 'Please specify the portrait style.');
+            header('Location: edit_order.php?id=' . $id);
+            exit;
+        }
+        $portraitStyle = $styleOther;
+    }
 
     // Prevent updating an order without selecting an existing customer
     if ($customerId <= 0) {
@@ -101,10 +133,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input class="input" type="text" id="pet_name" name="pet_name" value="<?php echo escape($order['pet_name']); ?>" required>
 
     <label class="label" for="pet_type">Pet Type *</label>
-    <input class="input" type="text" id="pet_type" name="pet_type" value="<?php echo escape($order['pet_type']); ?>" required>
+    <select class="input" id="pet_type" name="pet_type" required onchange="toggleOther(this, 'pet_type_other')">
+        <option value="">-- Select Pet Type --</option>
+        <?php foreach ($petTypes as $type): ?>
+            <option value="<?php echo escape($type); ?>" <?php echo ($type === $petTypeSelected) ? 'selected' : ''; ?>><?php echo escape($type); ?></option>
+        <?php endforeach; ?>
+    </select>
+    <input class="input" type="text" id="pet_type_other" name="pet_type_other" placeholder="Please specify" value="<?php echo escape($petTypeOtherValue); ?>" style="display:<?php echo $petTypeSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
 
     <label class="label" for="portrait_style">Portrait Style *</label>
-    <input class="input" type="text" id="portrait_style" name="portrait_style" value="<?php echo escape($order['portrait_style']); ?>" required>
+    <select class="input" id="portrait_style" name="portrait_style" required onchange="toggleOther(this, 'portrait_style_other')">
+        <option value="">-- Select Portrait Style --</option>
+        <?php foreach ($portraitStyles as $style): ?>
+            <option value="<?php echo escape($style); ?>" <?php echo ($style === $styleSelected) ? 'selected' : ''; ?>><?php echo escape($style); ?></option>
+        <?php endforeach; ?>
+    </select>
+    <input class="input" type="text" id="portrait_style_other" name="portrait_style_other" placeholder="Please specify" value="<?php echo escape($styleOtherValue); ?>" style="display:<?php echo $styleSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
 
     <label class="label" for="price">Price *</label>
     <input class="input input-small" type="number" id="price" name="price" step="0.01" min="0" value="<?php echo escape($order['price']); ?>" required>
@@ -117,3 +161,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </form>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
+
+<script>
+function toggleOther(select, otherId) {
+    var other = document.getElementById(otherId);
+    if (select.value === 'Other') {
+        other.style.display = 'block';
+        other.required = true;
+    } else {
+        other.style.display = 'none';
+        other.required = false;
+        other.value = '';
+    }
+}
+</script>
