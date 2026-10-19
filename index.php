@@ -1,23 +1,8 @@
 <?php require_once __DIR__ . '/includes/header.php'; ?>
 
 <div class="hero">
-    <h1>Welcome to Pet Portrait Prints</h1>
-    <p class="tagline">Custom illustrated portraits of your beloved pets Digital downloads, framed prints, mugs, and shirts.</p>
-</div>
-
-<div class="features">
-    <div class="feature">
-        <h3>🎨 Custom Artwork</h3>
-        <p>Hand-drawn illustrations capturing your pet's unique personality.</p>
-    </div>
-    <div class="feature">
-        <h3>🖼️ Multiple Formats</h3>
-        <p>Digital downloads, framed prints, mugs, shirts, and more.</p>
-    </div>
-    <div class="feature">
-        <h3>🚀 Fast Turnaround</h3>
-        <p>Receive your custom portrait within 5-7 business days.</p>
-    </div>
+    <h1>Pet Portrait Prints</h1>
+    <p class="tagline">Custom illustrated portraits of your pets — digital downloads, prints, mugs & shirts.</p>
 </div>
 
 <div class="dashboard">
