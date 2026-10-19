@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO customers (customer_name, email, phone) VALUES (?, ?, ?)");
         $stmt->execute([$customerName, $email, $phone]);
         setFlash('success', 'Customer added successfully!');
-        header('Location: ../customers/view_customers.php');
+        header('Location: view_customers.php');
         exit;
     } catch (PDOException $e) {
         if ($e->getCode() == 23000) {

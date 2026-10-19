@@ -3,12 +3,14 @@
 
 session_start();
 
-// Dynamic base URL detection
+// Dynamic base URL detection - always point to project root
+$scriptName = $_SERVER['SCRIPT_NAME'];
+$projectRoot = str_replace('\\', '/', dirname(__DIR__));
+$docRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
+$basePath = '/' . ltrim(str_replace($docRoot, '', $projectRoot), '/');
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
-$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-$baseUrl = $protocol . $host . ($scriptDir === '/' ? '/' : rtrim($scriptDir, '/') . '/');
-define('BASE_URL', $baseUrl);
+define('BASE_URL', $protocol . $host . ($basePath === '/' ? '/' : rtrim($basePath, '/') . '/'));
 
 $host = 'localhost';
 $db   = 'pet_portrait_prints';
