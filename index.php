@@ -1,25 +1,27 @@
 <?php require_once __DIR__ . '/includes/header.php'; ?>
 
-<div class="business-list">
-    <h2>Business Choices</h2>
-    <ol>
-        <li class="business-choice">Pet Portrait Prints — a business that creates custom illustrated portraits of customers' pets and sells them as digital downloads, framed prints, mugs, and shirts.</li>
-        <li>Mobile Pet Grooming — a business that provides at-home grooming services for dogs and cats.</li>
-        <li>Eco-Friendly Cleaning Kits — a business that sells sustainable cleaning supplies through subscription boxes.</li>
-    </ol>
+<div class="hero">
+    <h1>Welcome to Pet Portrait Prints</h1>
+    <p class="tagline">Custom illustrated portraits of your beloved pets — digital downloads, framed prints, mugs, and shirts.</p>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <h3>🎨 Custom Artwork</h3>
+        <p>Hand-drawn illustrations capturing your pet's unique personality.</p>
+    </div>
+    <div class="feature">
+        <h3>🖼️ Multiple Formats</h3>
+        <p>Digital downloads, framed prints, mugs, shirts, and more.</p>
+    </div>
+    <div class="feature">
+        <h3>🚀 Fast Turnaround</h3>
+        <p>Receive your custom portrait within 5-7 business days.</p>
+    </div>
 </div>
 
 <div class="dashboard">
-    <h2>One-to-Many Relationship</h2>
-    <p><strong>ONE CUSTOMER can have MANY PET PORTRAIT ORDERS</strong> registered in the database.</p>
-    <ul>
-        <li>Parent entity: <strong>Customer</strong></li>
-        <li>Child entity: <strong>Pet Portrait Order</strong></li>
-        <li>Foreign key: <code>customer_id</code> in the <code>pet_portrait_orders</code> table</li>
-        <li>Deleting a customer also deletes all their orders (ON DELETE CASCADE).</li>
-    </ul>
-
-    <h2 style="margin-top: 30px;">Quick Links</h2>
+    <h2>Quick Links</h2>
     <p>
         <a class="button" href="<?php echo BASE_URL; ?>customers/view_customers.php">View All Customers</a>
         <a class="button" href="<?php echo BASE_URL; ?>customers/add_customer.php">Add New Customer</a>
