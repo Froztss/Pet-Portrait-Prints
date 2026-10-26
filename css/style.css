@@ -191,6 +191,29 @@ form {
     background-color: #FFF9C4 !important;
 }
 
+/* Role badges */
+.role-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-left: 8px;
+}
+
+.role-badge.admin {
+    background-color: #FFEB3B;
+    color: #333;
+    border: 1px solid #FDD835;
+}
+
+.role-badge.user {
+    background-color: #E3F2FD;
+    color: #1565C0;
+    border: 1px solid #90CAF9;
+}
+
 /* Auth pages */
 .auth-container {
     max-width: 400px;
@@ -232,6 +255,15 @@ nav a.button {
     padding: 5px 10px;
     font-size: 12px;
     margin-left: 10px;
+}
+
+/* Success indicator */
+.form-success {
+    color: #3C763D;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
 }
 
 /* Responsive for auth */
