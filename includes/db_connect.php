@@ -119,10 +119,10 @@ function requireAdmin()
     }
 }
 
-// Format datetime in 24-hour format (Y-m-d H:i:s)
+// Format datetime in 12-hour format with AM/PM (Y-m-d h:i:s A)
 function formatDateTime($datetime)
 {
     if (!$datetime) return 'N/A';
     $dt = new DateTime($datetime);
-    return $dt->format('Y-m-d H:i:s');
+    return $dt->format('Y-m-d h:i:s A');
 }
