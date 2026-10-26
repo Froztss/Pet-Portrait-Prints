@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
+requireAuth();
 
 // Dropdown choices
 $petTypes = ['Dog', 'Cat', 'Rabbit', 'Bird', 'Hamster', 'Guinea Pig', 'Horse', 'Reptile', 'Other'];
@@ -58,10 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("
             INSERT INTO pet_portrait_orders
-                (customer_id, pet_name, pet_type, portrait_style, price, order_status)
-            VALUES (?, ?, ?, ?, ?, ?)
+                (customer_id, pet_name, pet_type, portrait_style, price, order_status, added_by)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus]);
+        $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus, currentUserId()]);
         $orderId = $pdo->lastInsertId();
         setFlash('success', 'Order #' . $orderId . ' added: ' . htmlspecialchars($petName, ENT_QUOTES, 'UTF-8'));
         header('Location: view_orders.php');
