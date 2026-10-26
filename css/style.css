@@ -169,6 +169,7 @@ input[type="submit"]:hover,
 button:hover {
     background-color: #254E99;
     border-color: #254E99;
+    color: #FFFFFF;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(51, 102, 204, 0.4);
 }
