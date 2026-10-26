@@ -53,7 +53,7 @@ requireAuth();
             echo '<td>' . escape($order['order_status']) . '</td>';
             echo '<td>' . escape($order['added_by_name'] ?? 'N/A') . '</td>';
             echo '<td>' . escape($order['updated_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . escape($order['created_at']) . '</td>';
+            echo '<td>' . escape(formatDateTime($order['created_at'])) . '</td>';
             echo '<td class="action-links">';
             echo '<a class="link" href="edit_order.php?id=' . escape($order['order_id']) . '">Edit</a>';
             echo '<a class="link" href="delete_order.php?id=' . escape($order['order_id']) . '">Delete</a>';

@@ -118,3 +118,11 @@ function requireAdmin()
         exit;
     }
 }
+
+// Format datetime in 24-hour format (Y-m-d H:i:s)
+function formatDateTime($datetime)
+{
+    if (!$datetime) return 'N/A';
+    $dt = new DateTime($datetime);
+    return $dt->format('Y-m-d H:i:s');
+}

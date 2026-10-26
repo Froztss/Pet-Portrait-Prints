@@ -36,7 +36,7 @@ requireAdmin();
             echo '<td>' . escape($user['first_name'] . ' ' . $user['last_name']) . '</td>';
             echo '<td>' . escape($user['email']) . '</td>';
             echo '<td><span class="role-badge ' . escape($user['role']) . '">' . escape(ucfirst($user['role'])) . '</span></td>';
-            echo '<td>' . escape($user['created_at']) . '</td>';
+            echo '<td>' . escape(formatDateTime($user['created_at'])) . '</td>';
             echo '<td class="action-links">';
             if ($user['user_id'] !== currentUserId()) {
                 echo '<a class="link" href="delete_user.php?id=' . escape($user['user_id']) . '" onclick="return confirm(\'Delete this user?\');">Delete</a>';
