@@ -101,3 +101,20 @@ function requireAuth()
         exit;
     }
 }
+
+// Check if current user is admin
+function isAdmin()
+{
+    return ($_SESSION['role'] ?? '') === 'admin';
+}
+
+// Require admin role
+function requireAdmin()
+{
+    requireAuth();
+    if (!isAdmin()) {
+        setFlash('error', 'Admin access required.');
+        header('Location: ' . BASE_URL . 'index.php');
+        exit;
+    }
+}
