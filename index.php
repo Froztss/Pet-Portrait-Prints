@@ -1,4 +1,7 @@
-<?php require_once __DIR__ . '/includes/header.php'; ?>
+<?php
+require_once __DIR__ . '/includes/header.php';
+requireAuth();
+?>
 
 <div class="hero">
     <h1>Pet Portrait Prints</h1>
