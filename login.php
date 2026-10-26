@@ -42,16 +42,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="flash flash-error"><?php echo escape($error); ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="login.php">
+    <form method="POST" action="login.php" id="loginForm">
         <label class="label" for="username">Username *</label>
         <input class="input" type="text" id="username" name="username" required autofocus>
 
         <label class="label" for="password">Password *</label>
         <input class="input" type="password" id="password" name="password" required>
 
-        <input class="button" type="submit" value="Login">
+        <input class="button" type="submit" value="Login" id="loginBtn">
         <a class="link" href="register.php">Create an account</a>
     </form>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    var btn = document.getElementById('loginBtn');
+    btn.classList.add('btn-loading');
+    btn.value = '';
+});
+</script>

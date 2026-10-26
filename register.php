@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="flash flash-success"><?php echo $success; ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="register.php">
+    <form method="POST" action="register.php" id="registerForm">
         <label class="label" for="username">Username *</label>
         <input class="input" type="text" id="username" name="username" required autofocus>
 
@@ -94,9 +94,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="label" for="phone">Phone</label>
         <input class="input" type="text" id="phone" name="phone">
 
-        <input class="button" type="submit" value="Register">
+        <input class="button" type="submit" value="Register" id="registerBtn">
         <a class="link" href="login.php">Already have an account? Login</a>
     </form>
 </div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    var btn = document.getElementById('registerBtn');
+    btn.classList.add('btn-loading');
+    btn.value = '';
+});
+</script>
