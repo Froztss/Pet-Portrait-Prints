@@ -65,4 +65,39 @@ function flashHtml($key)
     $type = ($key === 'error') ? 'flash-error' : 'flash-success';
     return '<div class="flash ' . $type . '">' . escape($message) . '</div>';
 }
-?>
+
+// Check if user is logged in
+function isLoggedIn()
+{
+    return isset($_SESSION['user_id']);
+}
+
+// Get current user ID
+function currentUserId()
+{
+    return $_SESSION['user_id'] ?? null;
+}
+
+// Get current username
+function currentUsername()
+{
+    return $_SESSION['username'] ?? null;
+}
+
+// Get current user full name
+function getCurrentUserName()
+{
+    if (isset($_SESSION['first_name'], $_SESSION['last_name'])) {
+        return $_SESSION['first_name'] . ' ' . $_SESSION['last_name'];
+    }
+    return null;
+}
+
+// Require authentication - redirect to login if not logged in
+function requireAuth()
+{
+    if (!isLoggedIn()) {
+        header('Location: ' . BASE_URL . 'login.php');
+        exit;
+    }
+}
