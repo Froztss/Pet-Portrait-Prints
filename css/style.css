@@ -4,36 +4,11 @@
     box-sizing: border-box;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
 body {
     background-color: #FFFFFF;
     color: #333333;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.5;
-}
-
-/* Page enter animation */
-main {
-    animation: fadeInUp 0.4s ease-out;
 }
 
 .container {
@@ -45,40 +20,45 @@ main {
 header {
     text-align: center;
     margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E0E0E0;
 }
 
 header h1 {
     font-size: 28px;
     margin-bottom: 10px;
+    color: #333333;
+}
+
+nav {
+    margin-top: 15px;
 }
 
 nav a {
-    color: #3366CC;
+    color: #555555;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 12px;
     font-size: 14px;
-    transition: color 0.2s ease, transform 0.2s ease;
+    font-weight: 500;
 }
 
 nav a:hover {
-    color: #254E99;
-    transform: translateY(-2px);
-    text-decoration: none;
+    color: #333333;
+    text-decoration: underline;
 }
 
 nav a.button {
-    transition: all 0.2s ease;
+    background-color: #333333;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 8px;
 }
 
 nav a.button:hover {
-    background-color: #254E99;
-    border-color: #254E99;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(51, 102, 204, 0.3);
-}
-
-nav a.button:active {
-    transform: translateY(1px) scale(0.98);
+    background-color: #555555;
 }
 
 main {
@@ -88,28 +68,30 @@ main {
 
 h2 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     color: #333333;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E0E0E0;
 }
 
 /* Homepage Hero */
 .hero {
     text-align: center;
-    padding: 40px 20px;
-    background-color: #F8F9FA;
-    border-radius: 8px;
+    padding: 50px 20px;
+    background-color: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
     margin-bottom: 30px;
-    animation: slideUp 0.5s ease-out 0.1s both;
 }
 
 .hero h1 {
-    font-size: 36px;
-    color: #3366CC;
-    margin-bottom: 15px;
+    font-size: 32px;
+    color: #333333;
+    margin-bottom: 12px;
 }
 
 .hero .tagline {
-    font-size: 18px;
+    font-size: 16px;
     color: #666666;
     max-width: 700px;
     margin: 0 auto;
@@ -119,25 +101,23 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    font-size: 14px;
 }
 
 th, td {
-    border: 1px solid #CCCCCC;
-    padding: 8px 12px;
+    border: 1px solid #E0E0E0;
+    padding: 10px 12px;
     text-align: left;
 }
 
 th {
-    background-color: #F0F0F0;
-    font-size: 14px;
+    background-color: #FAFAFA;
+    font-weight: 600;
+    color: #333333;
 }
 
 td {
-    font-size: 14px;
-}
-
-tr {
-    transition: background-color 0.2s ease;
+    color: #333333;
 }
 
 tr:nth-child(even) {
@@ -145,69 +125,45 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #F0F8FF;
+    background-color: #F5F5F5;
 }
 
 a.button,
 input[type="submit"],
 button {
-    background-color: #3366CC;
+    background-color: #333333;
     color: #FFFFFF;
-    border: 1px solid #3366CC;
-    padding: 8px 16px;
+    border: none;
+    padding: 10px 20px;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
+    border-radius: 4px;
+    transition: background-color 0.15s ease;
 }
 
 a.button:hover,
 input[type="submit"]:hover,
 button:hover {
-    background-color: #254E99;
-    border-color: #254E99;
-    color: #FFFFFF;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(51, 102, 204, 0.4);
+    background-color: #555555;
 }
 
 a.button:active,
 input[type="submit"]:active,
 button:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow: 0 2px 4px rgba(51, 102, 204, 0.3);
-}
-
-/* Loading spinner on buttons */
-.btn-loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
-}
-
-.btn-loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid #fff;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    background-color: #222222;
 }
 
 a.link {
-    color: #3366CC;
+    color: #555555;
     text-decoration: none;
+    font-size: 14px;
 }
 
 a.link:hover {
+    color: #333333;
     text-decoration: underline;
 }
 
@@ -217,8 +173,10 @@ form {
 
 .label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     font-size: 14px;
+    font-weight: 500;
+    color: #333333;
 }
 
 .input {
@@ -228,14 +186,14 @@ form {
     font-size: 14px;
     margin-bottom: 15px;
     border-radius: 4px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    background-color: #FFFFFF;
+    color: #333333;
 }
 
 .input:focus {
     outline: none;
-    border-color: #3366CC;
-    box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.15);
-    transform: translateY(-1px);
+    border-color: #333333;
+    box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
 }
 
 .input-small {
@@ -249,32 +207,21 @@ form {
 .flash {
     padding: 12px 16px;
     margin-bottom: 20px;
-    border: 1px solid #CCCCCC;
+    border: 1px solid #E0E0E0;
     font-size: 14px;
     border-radius: 4px;
-    animation: slideUp 0.3s ease-out;
-}
-
-form {
-    margin-bottom: 20px;
-    animation: slideUp 0.4s ease-out;
 }
 
 .flash-success {
-    background-color: #DFF0D8;
-    border-color: #D6E5B8;
-    color: #3C763D;
+    background-color: #F0F8F0;
+    border-color: #C8E6C8;
+    color: #2E7D32;
 }
 
 .flash-error {
-    background-color: #F2DEDE;
-    border-color: #EBCCCC;
-    color: #A94442;
-}
-
-.business-choice {
-    background-color: yellow;
-    padding: 5px;
+    background-color: #FDF0F0;
+    border-color: #F5C6CB;
+    color: #C62828;
 }
 
 .text-center {
@@ -286,40 +233,33 @@ form {
 }
 
 .action-links a {
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 .status-completed {
-    background-color: #FFF9C4 !important;
+    background-color: #FFFDE7 !important;
 }
 
 /* Role badges */
 .role-badge {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: 12px;
+    border-radius: 3px;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
     margin-left: 8px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.role-badge:hover {
-    transform: scale(1.1);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    letter-spacing: 0.5px;
 }
 
 .role-badge.admin {
-    background-color: #FFEB3B;
-    color: #333;
-    border: 1px solid #FDD835;
+    background-color: #333333;
+    color: #FFFFFF;
 }
 
 .role-badge.user {
-    background-color: #E3F2FD;
-    color: #1565C0;
-    border: 1px solid #90CAF9;
+    background-color: #E0E0E0;
+    color: #333333;
 }
 
 /* Auth pages */
@@ -328,24 +268,21 @@ form {
     margin: 60px auto;
     padding: 40px;
     background-color: #FFFFFF;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    animation: slideUp 0.5s ease-out;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
 }
 
 .auth-container h2 {
     text-align: center;
     margin-bottom: 30px;
-    color: #3366CC;
-    font-size: 28px;
+    color: #333333;
+    font-size: 24px;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .auth-container .flash {
     margin-bottom: 20px;
-}
-
-.auth-container form {
-    margin-bottom: 0;
 }
 
 .auth-container .input {
@@ -356,7 +293,8 @@ form {
 .auth-container .button {
     width: 100%;
     padding: 14px;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
     margin-top: 10px;
 }
 
@@ -365,41 +303,27 @@ form {
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
+    color: #555555;
 }
 
 /* User info in nav */
 .user-info {
-    color: #3366CC;
-    margin: 0 15px;
-    font-size: 14px;
+    color: #555555;
+    margin: 0 12px;
+    font-size: 13px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
-    background: #F0F4FF;
-    border-radius: 20px;
-    transition: background 0.2s ease;
-}
-
-.user-info:hover {
-    background: #E3EDFF;
+    gap: 6px;
+    padding: 5px 10px;
+    background: #F5F5F5;
+    border-radius: 3px;
 }
 
 nav a.button {
-    padding: 8px 16px;
-    font-size: 13px;
-    margin-left: 10px;
-    border-radius: 20px;
-}
-
-/* Success indicator */
-.form-success {
-    color: #3C763D;
+    padding: 8px 14px;
     font-size: 12px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    display: block;
-    animation: fadeInUp 0.3s ease-out;
+    margin-left: 8px;
+    border-radius: 3px;
 }
 
 /* Logout page overlay */
@@ -409,58 +333,58 @@ nav a.button {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.98);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    animation: fadeIn 0.3s ease-out;
 }
 
 .logout-overlay .spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid #E0E0E0;
-    border-top-color: #3366CC;
+    width: 40px;
+    height: 40px;
+    border: 3px solid #E0E0E0;
+    border-top-color: #333333;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
 
-/* Responsive for auth */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
 @media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+    
     .auth-container {
-        margin: 20px 10px;
-        padding: 20px;
+        margin: 20px 15px;
+        padding: 25px;
     }
     
     nav {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 5px;
+        gap: 8px;
     }
     
     nav a, nav span, nav a.button {
-        margin: 2px 5px;
+        margin: 4px 6px;
     }
-}
-
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-    nav a {
-        display: block;
-        margin: 5px 0;
-    }
-
+    
     th, td {
         font-size: 12px;
-        padding: 5px 8px;
+        padding: 8px 10px;
     }
-
+    
     .hero h1 {
-        font-size: 28px;
+        font-size: 26px;
+    }
+    
+    .hero .tagline {
+        font-size: 15px;
     }
 }
