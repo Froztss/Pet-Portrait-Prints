@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
+requireAuth();
 
 // Get customer ID from URL
 $id = $_GET['id'] ?? 0;
@@ -31,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // Update the database
     try {
-        $stmt = $pdo->prepare("UPDATE customers SET customer_name = ?, email = ?, phone = ? WHERE customer_id = ?");
-        $stmt->execute([$customerName, $email, $phone, $id]);
+        $stmt = $pdo->prepare("UPDATE customers SET customer_name = ?, email = ?, phone = ?, updated_by = ? WHERE customer_id = ?");
+        $stmt->execute([$customerName, $email, $phone, currentUserId(), $id]);
         // Fetch updated name for the success message
         $stmt = $pdo->prepare("SELECT customer_name FROM customers WHERE customer_id = ?");
         $stmt->execute([$id]);

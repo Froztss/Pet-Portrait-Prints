@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
+requireAuth();
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -23,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert into database
     try {
-        $stmt = $pdo->prepare("INSERT INTO customers (customer_name, email, phone) VALUES (?, ?, ?)");
-        $stmt->execute([$customerName, $email, $phone]);
-        setFlash('success', 'Customer added successfully!');
+        $stmt = $pdo->prepare("INSERT INTO customers (customer_name, email, phone, added_by) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$customerName, $email, $phone, currentUserId()]);
+        setFlash('success', 'Customer added: ' . escape($customerName));
         header('Location: view_customers.php');
         exit;
     } catch (PDOException $e) {
