@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             WHERE order_id = ?
         ");
         $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus, currentUserId(), $id]);
-        setFlash('success', 'Order #' . $id . ' updated: ' . htmlspecialchars($petName, ENT_QUOTES, 'UTF-8'));
+        setFlash('success', 'Order #' . $id . ' updated: ' . $petName);
         header('Location: view_orders.php');
         exit;
     } catch (PDOException $e) {

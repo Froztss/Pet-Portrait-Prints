@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT customer_name FROM customers WHERE customer_id = ?");
         $stmt->execute([$id]);
         $updatedName = $stmt->fetchColumn();
-        setFlash('success', 'Customer updated: ' . htmlspecialchars($updatedName ?? '', ENT_QUOTES, 'UTF-8'));
+        setFlash('success', 'Customer updated: ' . ($updatedName ?? ''));
         header('Location: view_customers.php');
         exit;
     } catch (PDOException $e) {

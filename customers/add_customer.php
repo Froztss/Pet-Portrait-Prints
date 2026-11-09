@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("INSERT INTO customers (customer_name, email, phone, added_by) VALUES (?, ?, ?, ?)");
         $stmt->execute([$customerName, $email, $phone, currentUserId()]);
-        setFlash('success', 'Customer added: ' . escape($customerName));
+        setFlash('success', 'Customer added: ' . $customerName);
         header('Location: view_customers.php');
         exit;
     } catch (PDOException $e) {

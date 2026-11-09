@@ -1,7 +1,27 @@
 <?php
 // Database connection and common helpers
 
+// Harden session cookies against XSS theft (HttpOnly prevents JS access) and interception (Secure over HTTPS)
+// These must be set before session_start() to take effect.
+ini_set('session.cookie_httponly', '1');
+ini_set('session.use_only_cookies', '1');
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+    ini_set('session.cookie_secure', '1');
+}
+
+session_set_cookie_params([
+    'httponly' => true,
+    'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+    'samesite' => 'Lax',
+]);
+
 session_start();
+
+// Defense-in-depth: Content Security Policy restricts inline/external script execution
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; base-uri 'self'; frame-ancestors 'none';");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("Referrer-Policy: strict-origin-when-cross-origin");
 
 // Dynamic base URL detection - always point to project root
 $scriptName = $_SERVER['SCRIPT_NAME'];
@@ -49,7 +69,9 @@ function getFlash($key)
     return null;
 }
 
-// Escape output for HTML
+// Escape output for HTML to prevent XSS: converts special characters to HTML entities
+// so user-supplied data is rendered as text, not executed as HTML/JavaScript.
+// Apply this to every value echoed from the database or user input.
 function escape($string)
 {
     return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
