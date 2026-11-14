@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         $passwordMatches = false;
+        $isLegacyHash = false;
         if ($user) {
             $storedPassword = $user['password_hash'];
             // Verify hashes while allowing older demo accounts to be upgraded on login.
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 : $password === $storedPassword;
         }
 
-        if ($passwordMatches) {
+        if ($user && $passwordMatches) {
             // Replace an older plain-text password with a hash after a successful login.
             if (!$isLegacyHash) {
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($error): ?>
         <div class="flash flash-error">
-            <?php echo $error; ?>
+            <?php echo rawOutput($error); ?>
         </div>
     <?php endif; ?>
 
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             type="text"
             id="username"
             name="username"
-            value="<?php echo $username; ?>"
+            value="<?php echo rawOutput($username); ?>"
             required
             autofocus
         >
@@ -98,11 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script>
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', function() {
     var btn = document.getElementById('loginBtn');
 
     btn.classList.add('btn-loading');
-    btn.value = '';
+    btn.value = 'Logging in...';
+    btn.disabled = true;
+});
+
+window.addEventListener('pageshow', function() {
+    var btn = document.getElementById('loginBtn');
+    btn.classList.remove('btn-loading');
+    btn.value = 'Login';
+    btn.disabled = false;
 });
 </script>
 

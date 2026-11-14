@@ -93,7 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php require_once __DIR__ . '/includes/header.php'; ?>
+<?php
+$wideRegistration = true;
+require_once __DIR__ . '/includes/header.php';
+?>
 
 <div class="auth-container register-container">
     <h2>Register</h2>
@@ -122,16 +125,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     name="username"
                     required
                     autofocus
-                >
-            </div>
-            <div class="form-field">
-                <label class="label" for="email">Email *</label>
-                <input
-                    class="input"
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
                 >
             </div>
             <div class="form-field">
@@ -180,6 +173,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 >
             </div>
             <div class="form-field">
+                <label class="label" for="email">Email *</label>
+                <input
+                    class="input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                >
+            </div>
+            <div class="form-field">
                 <label class="label" for="age">Age</label>
                 <input
                     class="input input-small"
@@ -199,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     name="phone"
                 >
             </div>
-            <div class="form-field form-field-wide">
+            <div class="form-field">
                 <label class="label" for="address">Address</label>
                 <input
                     class="input"

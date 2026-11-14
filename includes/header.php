@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Portrait Prints</title>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/style.css?v=<?php echo filemtime(__DIR__ . '/../css/style.css'); ?>">
 </head>
 <body>
-<div class="container">
+<div class="container<?php echo !empty($wideRegistration) ? ' registration-page' : ''; ?>">
     <header>
         <h1>Pet Portrait Prints</h1>
         <nav>
