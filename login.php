@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $passwordMatches = false;
         if ($user) {
             $storedPassword = $user['password_hash'];
-            // Continue accepting accounts created before plain-text storage was enabled.
+            // Verify hashes while allowing older demo accounts to be upgraded on login.
             $isLegacyHash = password_get_info($storedPassword)['algoName'] !== 'unknown';
             $passwordMatches = $isLegacyHash
                 ? password_verify($password, $storedPassword)
@@ -32,6 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($passwordMatches) {
+            // Replace an older plain-text password with a hash after a successful login.
+            if (!$isLegacyHash) {
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $update = $pdo->prepare('UPDATE users SET password_hash = ? WHERE user_id = ?');
+                $update->execute([$passwordHash, $user['user_id']]);
+            }
+            session_regenerate_id(true);
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['first_name'] = $user['first_name'];

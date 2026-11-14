@@ -33,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
 
+    } elseif (!validatePasswordStrength($password)) {
+        // Enforce the password rules even when browser validation is bypassed.
+        $error = 'Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, and a number.';
+
     } elseif ($password !== $confirm) {
         $error = 'Passwords do not match.';
 
@@ -51,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username or email already registered.';
 
         } else {
-            // Store the demo password as plain text in the existing password_hash column.
+            // Store a one-way password hash instead of the readable password.
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
             try {
                 $stmt = $pdo->prepare("
                     INSERT INTO users (
@@ -69,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt->execute([
                     $username,
-                    $password,
+                    $passwordHash,
                     $firstName,
                     $lastName,
                     $email,
@@ -90,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php require_once __DIR__ . '/includes/header.php'; ?>
 
-<div class="auth-container">
+<div class="auth-container register-container">
     <h2>Register</h2>
 
     <?php if ($error): ?>
@@ -107,98 +112,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="register.php" id="registerForm">
 
-        <label class="label" for="username">Username *</label>
-        <input
-            class="input"
-            type="text"
-            id="username"
-            name="username"
-            required
-            autofocus
-        >
+        <div class="register-grid">
+            <div class="form-field">
+                <label class="label" for="username">Username *</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autofocus
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="email">Email *</label>
+                <input
+                    class="input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="password">Password *</label>
+                <input
+                    class="input"
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="8"
+                    pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}"
+                    title="Use at least 8 characters with an uppercase letter, a lowercase letter, and a number."
+                    aria-describedby="password-help"
+                >
+                <p id="password-help">Use at least 8 characters with an uppercase letter, a lowercase letter, and a number.</p>
+            </div>
+            <div class="form-field">
+                <label class="label" for="confirm_password">Confirm Password *</label>
+                <input
+                    class="input"
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    required
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="first_name">First Name *</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    required
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="last_name">Last Name *</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    required
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="age">Age</label>
+                <input
+                    class="input input-small"
+                    type="number"
+                    id="age"
+                    name="age"
+                    min="0"
+                    max="120"
+                >
+            </div>
+            <div class="form-field">
+                <label class="label" for="phone">Phone</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="phone"
+                    name="phone"
+                >
+            </div>
+            <div class="form-field form-field-wide">
+                <label class="label" for="address">Address</label>
+                <input
+                    class="input"
+                    type="text"
+                    id="address"
+                    name="address"
+                >
+            </div>
+        </div>
 
-        <label class="label" for="password">Password *</label>
-        <input
-            class="input"
-            type="password"
-            id="password"
-            name="password"
-            required
-        >
+        <div class="register-actions">
+            <input
+                class="button"
+                type="submit"
+                value="Register"
+                id="registerBtn"
+            >
 
-        <label class="label" for="confirm_password">Confirm Password *</label>
-        <input
-            class="input"
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            required
-        >
+            <a class="link" href="login.php">
+                Already have an account? Login
+            </a>
 
-        <label class="label" for="first_name">First Name *</label>
-        <input
-            class="input"
-            type="text"
-            id="first_name"
-            name="first_name"
-            required
-        >
-
-        <label class="label" for="last_name">Last Name *</label>
-        <input
-            class="input"
-            type="text"
-            id="last_name"
-            name="last_name"
-            required
-        >
-
-        <label class="label" for="email">Email *</label>
-        <input
-            class="input"
-            type="email"
-            id="email"
-            name="email"
-            required
-        >
-
-        <label class="label" for="address">Address</label>
-        <input
-            class="input"
-            type="text"
-            id="address"
-            name="address"
-        >
-
-        <label class="label" for="age">Age</label>
-        <input
-            class="input input-small"
-            type="number"
-            id="age"
-            name="age"
-            min="0"
-            max="120"
-        >
-
-        <label class="label" for="phone">Phone</label>
-        <input
-            class="input"
-            type="text"
-            id="phone"
-            name="phone"
-        >
-
-        <input
-            class="button"
-            type="submit"
-            value="Register"
-            id="registerBtn"
-        >
-
-        <a class="link" href="login.php">
-            Already have an account? Login
-        </a>
-
+        </div>
     </form>
 </div>
 
