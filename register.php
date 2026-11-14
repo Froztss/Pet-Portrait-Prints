@@ -33,9 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
 
-    } elseif (!validatePasswordStrength($password)) {
-        $error = 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one number.';
-
     } elseif ($password !== $confirm) {
         $error = 'Passwords do not match.';
 
@@ -129,9 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             id="password"
             name="password"
             required
-            minlength="8"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="Password must be at least 8 characters with at least one uppercase, one lowercase, and one number"
         >
 
         <label class="label" for="confirm_password">Confirm Password *</label>
