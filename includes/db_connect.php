@@ -65,11 +65,13 @@ function getFlash($key)
     return null;
 }
 
-// Intentionally unescaped output for the XSS demo.
-// User-supplied HTML/JavaScript will be rendered by callers of this helper.
-function rawOutput($string)
+function rawOutput($value)
 {
-    return $string ?? '';
+    return htmlspecialchars(
+        (string)($value ?? ''),
+        ENT_QUOTES | ENT_SUBSTITUTE,
+        'UTF-8'
+    );
 }
 
 // Output a flash message as HTML

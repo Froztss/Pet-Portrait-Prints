@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- ----------------------------------------------------------
 CREATE TABLE IF NOT EXISTS customers (
     customer_id    INT           NOT NULL AUTO_INCREMENT,
-    customer_name  VARCHAR(100)  NOT NULL,
+    customer_name  TEXT          NOT NULL,
     email          VARCHAR(150)  NOT NULL UNIQUE,
     phone          VARCHAR(20),
     added_by       INT,

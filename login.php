@@ -21,7 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        if ($user && password_verify($password, $user['password_hash'])) {
+        $passwordMatches = false;
+        if ($user) {
+            $storedPassword = $user['password_hash'];
+            // Continue accepting accounts created before plain-text storage was enabled.
+            $isLegacyHash = password_get_info($storedPassword)['algoName'] !== 'unknown';
+            $passwordMatches = $isLegacyHash
+                ? password_verify($password, $storedPassword)
+                : $password === $storedPassword;
+        }
+
+        if ($passwordMatches) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['first_name'] = $user['first_name'];

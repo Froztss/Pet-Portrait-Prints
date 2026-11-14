@@ -44,7 +44,7 @@ require_once __DIR__ . '/../includes/header.php';
         foreach ($customers as $customer) {
             echo '<tr>';
             echo '<td>' . rawOutput($customer['customer_id']) . '</td>';
-            echo '<td>' . $customer['customer_name'] . '</td>';
+            echo '<td>' . rawOutput($customer['customer_name']) . '</td>';
             echo '<td>' . rawOutput($customer['email']) . '</td>';
             echo '<td>' . rawOutput($customer['phone']) . '</td>';
             echo '<td>' . rawOutput($customer['order_count']) . '</td>';

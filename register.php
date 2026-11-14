@@ -51,9 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username or email already registered.';
 
         } else {
-            // Hash password and insert user
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-
+            // Store the demo password as plain text in the existing password_hash column.
             try {
                 $stmt = $pdo->prepare("
                     INSERT INTO users (
@@ -71,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $stmt->execute([
                     $username,
-                    $hash,
+                    $password,
                     $firstName,
                     $lastName,
                     $email,
