@@ -43,7 +43,7 @@ requireAuth();
         foreach ($customers as $customer) {
             echo '<tr>';
             echo '<td>' . escape($customer['customer_id']) . '</td>';
-            echo '<td>' . escape($customer['customer_name']) . '</td>';
+            echo '<td>' . $customer['customer_name'] . '</td>';
             echo '<td>' . escape($customer['email']) . '</td>';
             echo '<td>' . escape($customer['phone']) . '</td>';
             echo '<td>' . escape($customer['order_count']) . '</td>';
