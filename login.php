@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2>Login</h2>
 
     <?php if ($error): ?>
-        <div class="flash flash-error"><?php echo escape($error); ?></div>
+        <div class="flash flash-error"><?php echo $error; ?></div>
     <?php endif; ?>
 
     <form method="POST" action="login.php" id="loginForm">
