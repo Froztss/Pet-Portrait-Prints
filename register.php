@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please fill in all required fields.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address.';
-    } elseif (strlen($password) < 6) {
-        $error = 'Password must be at least 6 characters.';
+    } elseif (!validatePasswordStrength($password)) {
+        $error = 'Password must be at least 8 characters and include at least one uppercase letter, one lowercase letter, and one number.';
     } elseif ($password !== $confirm) {
         $error = 'Passwords do not match.';
     } elseif ($age !== '' && (!is_numeric($age) || $age < 0 || $age > 120)) {
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input class="input" type="text" id="username" name="username" required autofocus>
 
         <label class="label" for="password">Password *</label>
-        <input class="input" type="password" id="password" name="password" required minlength="6">
+        <input class="input" type="password" id="password" name="password" required minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters with at least one uppercase, one lowercase, and one number">
 
         <label class="label" for="confirm_password">Confirm Password *</label>
         <input class="input" type="password" id="confirm_password" name="confirm_password" required>

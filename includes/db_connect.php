@@ -148,3 +148,9 @@ function formatDateTime($datetime)
     $dt = new DateTime($datetime);
     return $dt->format('Y-m-d h:i:s A');
 }
+
+// Validate password strength: minimum 8 characters, at least one uppercase, one lowercase, one number
+function validatePasswordStrength($password)
+{
+    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $password) === 1;
+}
