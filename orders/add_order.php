@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus, currentUserId()]);
         $orderId = $pdo->lastInsertId();
-        setFlash('success', 'Order #' . $orderId . ' added: ' . htmlspecialchars($petName, ENT_QUOTES, 'UTF-8'));
+        setFlash('success', 'Order #' . $orderId . ' added: ' . $petName);
         header('Location: view_orders.php');
         exit;
     } catch (PDOException $e) {
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <option value="">-- Select a Customer --</option>
         <?php
         foreach ($customers as $customer) {
-            echo '<option value="' . escape($customer['customer_id']) . '">' . escape($customer['customer_name']) . '</option>';
+            echo '<option value="' . rawOutput($customer['customer_id']) . '">' . rawOutput($customer['customer_name']) . '</option>';
         }
         ?>
     </select>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <select class="input" id="pet_type" name="pet_type" required onchange="toggleOther(this, 'pet_type_other')">
         <option value="">-- Select Pet Type --</option>
         <?php foreach ($petTypes as $type): ?>
-            <option value="<?php echo escape($type); ?>"><?php echo escape($type); ?></option>
+            <option value="<?php echo rawOutput($type); ?>"><?php echo rawOutput($type); ?></option>
         <?php endforeach; ?>
     </select>
     <input class="input" type="text" id="pet_type_other" name="pet_type_other" placeholder="Please specify" style="display:none; margin-top:5px;">
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <select class="input" id="portrait_style" name="portrait_style" required onchange="toggleOther(this, 'portrait_style_other')">
         <option value="">-- Select Portrait Style --</option>
         <?php foreach ($portraitStyles as $style): ?>
-            <option value="<?php echo escape($style); ?>"><?php echo escape($style); ?></option>
+            <option value="<?php echo rawOutput($style); ?>"><?php echo rawOutput($style); ?></option>
         <?php endforeach; ?>
     </select>
     <input class="input" type="text" id="portrait_style_other" name="portrait_style_other" placeholder="Please specify" style="display:none; margin-top:5px;">
@@ -123,8 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a class="link" href="view_orders.php">Cancel</a>
 </form>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-
 <script>
 function toggleOther(select, otherId) {
     var other = document.getElementById(otherId);
@@ -138,3 +136,5 @@ function toggleOther(select, otherId) {
     }
 }
 </script>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: view_customers.php');
         exit;
     } catch (PDOException $e) {
-        echo '<div class="flash flash-error">Error deleting customer: ' . escape($e->getMessage()) . '</div>';
+        echo '<div class="flash flash-error">Error deleting customer: ' . rawOutput($e->getMessage()) . '</div>';
     }
 }
 ?>
@@ -49,19 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <table>
     <tr>
         <th>ID</th>
-        <td><?php echo escape($customer['customer_id']); ?></td>
+        <td><?php echo rawOutput($customer['customer_id']); ?></td>
     </tr>
     <tr>
         <th>Name</th>
-        <td><?php echo escape($customer['customer_name']); ?></td>
+        <td><?php echo rawOutput($customer['customer_name']); ?></td>
     </tr>
     <tr>
         <th>Email</th>
-        <td><?php echo escape($customer['email']); ?></td>
+        <td><?php echo rawOutput($customer['email']); ?></td>
     </tr>
     <tr>
         <th>Phone</th>
-        <td><?php echo escape($customer['phone']); ?></td>
+        <td><?php echo rawOutput($customer['phone']); ?></td>
     </tr>
     <tr>
         <th>Orders Count</th>
@@ -69,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
             $countStmt = $pdo->prepare("SELECT COUNT(*) FROM pet_portrait_orders WHERE customer_id = ?");
             $countStmt->execute([$id]);
-            echo escape($countStmt->fetchColumn());
+            echo rawOutput($countStmt->fetchColumn());
             ?>
         </td>
     </tr>
 </table>
 
-<form method="POST" action="delete_customer.php?id=<?php echo escape($id); ?>">
+<form method="POST" action="delete_customer.php?id=<?php echo rawOutput($id); ?>">
     <input class="button" type="submit" value="Yes, Delete Customer" onclick="return confirm('Are you sure? This cannot be undone.');">
     <a class="link" href="view_customers.php">Cancel</a>
 </form>

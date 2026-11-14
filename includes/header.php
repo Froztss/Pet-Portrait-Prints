@@ -20,7 +20,7 @@
             <?php endif; ?>
             <?php if (isLoggedIn()): ?>
                 <span class="user-info">
-                    Welcome, <?php echo escape(getCurrentUserName()); ?>
+                    Welcome, <?php echo rawOutput(getCurrentUserName()); ?>
                     <?php if (isAdmin()): ?>
                         <span class="role-badge admin">Admin</span>
                     <?php else: ?>

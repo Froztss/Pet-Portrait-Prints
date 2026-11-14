@@ -1,28 +1,23 @@
 <?php
 // Database connection and common helpers
 
-// Harden session cookies against XSS theft (HttpOnly prevents JS access) and interception (Secure over HTTPS)
-// These must be set before session_start() to take effect.
-ini_set('session.cookie_httponly', '1');
+// Intentionally allow JavaScript access to the session cookie for the XSS demo.
+// These settings must be applied before session_start().
+ini_set('session.cookie_httponly', '0');
 ini_set('session.use_only_cookies', '1');
 if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
     ini_set('session.cookie_secure', '1');
 }
 
 session_set_cookie_params([
-    'httponly' => true,
+    'httponly' => false,
     'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
     'samesite' => 'Lax',
 ]);
 
 session_start();
 
-// Defense-in-depth: Content Security Policy restricts inline/external script execution
-// TEMPORARILY DISABLED for XSS demo — restore after screenshots
-// header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; form-action 'self'; base-uri 'self'; frame-ancestors 'none';");
-header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("Referrer-Policy: strict-origin-when-cross-origin");
+// No content filtering or browser security headers in this unsanitized demo.
 
 // Dynamic base URL detection - always point to project root
 $scriptName = $_SERVER['SCRIPT_NAME'];
@@ -70,12 +65,11 @@ function getFlash($key)
     return null;
 }
 
-// Escape output for HTML to prevent XSS: converts special characters to HTML entities
-// so user-supplied data is rendered as text, not executed as HTML/JavaScript.
-// Apply this to every value echoed from the database or user input.
-function escape($string)
+// Intentionally unescaped output for the XSS demo.
+// User-supplied HTML/JavaScript will be rendered by callers of this helper.
+function rawOutput($string)
 {
-    return htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8');
+    return $string ?? '';
 }
 
 // Output a flash message as HTML
@@ -86,7 +80,7 @@ function flashHtml($key)
         return '';
     }
     $type = ($key === 'error') ? 'flash-error' : 'flash-success';
-    return '<div class="flash ' . $type . '">' . escape($message) . '</div>';
+    return '<div class="flash ' . $type . '">' . rawOutput($message) . '</div>';
 }
 
 // Check if user is logged in

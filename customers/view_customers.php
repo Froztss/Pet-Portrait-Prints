@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/db_connect.php';
 requireAuth();
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <h2>All Customers</h2>
@@ -42,17 +43,17 @@ requireAuth();
 
         foreach ($customers as $customer) {
             echo '<tr>';
-            echo '<td>' . escape($customer['customer_id']) . '</td>';
+            echo '<td>' . rawOutput($customer['customer_id']) . '</td>';
             echo '<td>' . $customer['customer_name'] . '</td>';
-            echo '<td>' . escape($customer['email']) . '</td>';
-            echo '<td>' . escape($customer['phone']) . '</td>';
-            echo '<td>' . escape($customer['order_count']) . '</td>';
-            echo '<td>' . escape($customer['added_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . escape($customer['updated_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . escape(formatDateTime($customer['created_at'])) . '</td>';
+            echo '<td>' . rawOutput($customer['email']) . '</td>';
+            echo '<td>' . rawOutput($customer['phone']) . '</td>';
+            echo '<td>' . rawOutput($customer['order_count']) . '</td>';
+            echo '<td>' . rawOutput($customer['added_by_name'] ?? 'N/A') . '</td>';
+            echo '<td>' . rawOutput($customer['updated_by_name'] ?? 'N/A') . '</td>';
+            echo '<td>' . rawOutput(formatDateTime($customer['created_at'])) . '</td>';
             echo '<td class="action-links">';
-            echo '<a class="link" href="edit_customer.php?id=' . escape($customer['customer_id']) . '">Edit</a>';
-            echo '<a class="link" href="delete_customer.php?id=' . escape($customer['customer_id']) . '">Delete</a>';
+            echo '<a class="link" href="edit_customer.php?id=' . rawOutput($customer['customer_id']) . '">Edit</a>';
+            echo '<a class="link" href="delete_customer.php?id=' . rawOutput($customer['customer_id']) . '">Delete</a>';
             echo '</td>';
             echo '</tr>';
         }

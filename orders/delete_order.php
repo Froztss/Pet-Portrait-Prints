@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: view_orders.php');
         exit;
     } catch (PDOException $e) {
-        echo '<div class="flash flash-error">Error deleting order: ' . escape($e->getMessage()) . '</div>';
+        echo '<div class="flash flash-error">Error deleting order: ' . rawOutput($e->getMessage()) . '</div>';
     }
 }
 ?>
@@ -53,35 +53,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <table>
     <tr>
         <th>ID</th>
-        <td><?php echo escape($order['order_id']); ?></td>
+        <td><?php echo rawOutput($order['order_id']); ?></td>
     </tr>
     <tr>
         <th>Customer</th>
-        <td><?php echo escape($order['customer_name']); ?></td>
+        <td><?php echo rawOutput($order['customer_name']); ?></td>
     </tr>
     <tr>
         <th>Pet Name</th>
-        <td><?php echo escape($order['pet_name']); ?></td>
+        <td><?php echo rawOutput($order['pet_name']); ?></td>
     </tr>
     <tr>
         <th>Pet Type</th>
-        <td><?php echo escape($order['pet_type']); ?></td>
+        <td><?php echo rawOutput($order['pet_type']); ?></td>
     </tr>
     <tr>
         <th>Portrait Style</th>
-        <td><?php echo escape($order['portrait_style']); ?></td>
+        <td><?php echo rawOutput($order['portrait_style']); ?></td>
     </tr>
     <tr>
         <th>Price</th>
-        <td>$<?php echo escape(number_format($order['price'], 2)); ?></td>
+        <td>$<?php echo rawOutput(number_format($order['price'], 2)); ?></td>
     </tr>
     <tr>
         <th>Status</th>
-        <td><?php echo escape($order['order_status']); ?></td>
+        <td><?php echo rawOutput($order['order_status']); ?></td>
     </tr>
 </table>
 
-<form method="POST" action="delete_order.php?id=<?php echo escape($id); ?>">
+<form method="POST" action="delete_order.php?id=<?php echo rawOutput($id); ?>">
     <input class="button" type="submit" value="Yes, Delete Order" onclick="return confirm('Are you sure? This cannot be undone.');">
     <a class="link" href="view_orders.php">Cancel</a>
 </form>

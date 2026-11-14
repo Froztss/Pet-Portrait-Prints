@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/includes/db_connect.php';
 
@@ -18,8 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($username === '' || $password === '') {
         $error = 'Please enter both username and password.';
     } else {
-        $username = preg_replace('/[\x00-\x1F\x7F]/u', '', $username);
-
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch();
@@ -47,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($error): ?>
         <div class="flash flash-error">
-            <?php echo escape($error); ?>
+            <?php echo $error; ?>
         </div>
     <?php endif; ?>
 
@@ -58,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             type="text"
             id="username"
             name="username"
-            value="<?php echo escape($username); ?>"
+            value="<?php echo $username; ?>"
             required
             autofocus
         >
@@ -83,8 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
-
 <script>
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     var btn = document.getElementById('loginBtn');
@@ -93,3 +88,5 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     btn.value = '';
 });
 </script>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

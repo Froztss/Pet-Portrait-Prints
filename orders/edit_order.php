@@ -118,50 +118,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php echo flashHtml('success'); ?>
 <?php echo flashHtml('error'); ?>
 
-<form method="POST" action="edit_order.php?id=<?php echo escape($id); ?>">
+<form method="POST" action="edit_order.php?id=<?php echo rawOutput($id); ?>">
     <label class="label" for="customer_id">Customer *</label>
     <select class="input" id="customer_id" name="customer_id" required>
         <option value="">-- Select a Customer --</option>
         <?php
         foreach ($customers as $customer) {
             $selected = ($customer['customer_id'] == $order['customer_id']) ? 'selected' : '';
-            echo '<option value="' . escape($customer['customer_id']) . '" ' . $selected . '>' . escape($customer['customer_name']) . '</option>';
+            echo '<option value="' . rawOutput($customer['customer_id']) . '" ' . $selected . '>' . rawOutput($customer['customer_name']) . '</option>';
         }
         ?>
     </select>
 
     <label class="label" for="pet_name">Pet Name *</label>
-    <input class="input" type="text" id="pet_name" name="pet_name" value="<?php echo escape($order['pet_name']); ?>" required>
+    <input class="input" type="text" id="pet_name" name="pet_name" value="<?php echo rawOutput($order['pet_name']); ?>" required>
 
     <label class="label" for="pet_type">Pet Type *</label>
     <select class="input" id="pet_type" name="pet_type" required onchange="toggleOther(this, 'pet_type_other')">
         <option value="">-- Select Pet Type --</option>
         <?php foreach ($petTypes as $type): ?>
-            <option value="<?php echo escape($type); ?>" <?php echo ($type === $petTypeSelected) ? 'selected' : ''; ?>><?php echo escape($type); ?></option>
+            <option value="<?php echo rawOutput($type); ?>" <?php echo ($type === $petTypeSelected) ? 'selected' : ''; ?>><?php echo rawOutput($type); ?></option>
         <?php endforeach; ?>
     </select>
-    <input class="input" type="text" id="pet_type_other" name="pet_type_other" placeholder="Please specify" value="<?php echo escape($petTypeOtherValue); ?>" style="display:<?php echo $petTypeSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
+    <input class="input" type="text" id="pet_type_other" name="pet_type_other" placeholder="Please specify" value="<?php echo rawOutput($petTypeOtherValue); ?>" style="display:<?php echo $petTypeSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
 
     <label class="label" for="portrait_style">Portrait Style *</label>
     <select class="input" id="portrait_style" name="portrait_style" required onchange="toggleOther(this, 'portrait_style_other')">
         <option value="">-- Select Portrait Style --</option>
         <?php foreach ($portraitStyles as $style): ?>
-            <option value="<?php echo escape($style); ?>" <?php echo ($style === $styleSelected) ? 'selected' : ''; ?>><?php echo escape($style); ?></option>
+            <option value="<?php echo rawOutput($style); ?>" <?php echo ($style === $styleSelected) ? 'selected' : ''; ?>><?php echo rawOutput($style); ?></option>
         <?php endforeach; ?>
     </select>
-    <input class="input" type="text" id="portrait_style_other" name="portrait_style_other" placeholder="Please specify" value="<?php echo escape($styleOtherValue); ?>" style="display:<?php echo $styleSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
+    <input class="input" type="text" id="portrait_style_other" name="portrait_style_other" placeholder="Please specify" value="<?php echo rawOutput($styleOtherValue); ?>" style="display:<?php echo $styleSelected === 'Other' ? 'block' : 'none'; ?>; margin-top:5px;">
 
     <label class="label" for="price">Price *</label>
-    <input class="input input-small" type="number" id="price" name="price" step="0.01" min="0" value="<?php echo escape($order['price']); ?>" required>
+    <input class="input input-small" type="number" id="price" name="price" step="0.01" min="0" value="<?php echo rawOutput($order['price']); ?>" required>
 
     <label class="label" for="order_status">Order Status</label>
-    <input class="input input-medium" type="text" id="order_status" name="order_status" value="<?php echo escape($order['order_status']); ?>">
+    <input class="input input-medium" type="text" id="order_status" name="order_status" value="<?php echo rawOutput($order['order_status']); ?>">
 
     <input class="button" type="submit" value="Update Order">
     <a class="link" href="view_orders.php">Cancel</a>
 </form>
-
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
 
 <script>
 function toggleOther(select, otherId) {
@@ -176,3 +174,5 @@ function toggleOther(select, otherId) {
     }
 }
 </script>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

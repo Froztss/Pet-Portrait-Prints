@@ -70,15 +70,15 @@ if (!$customer) {
 <?php echo flashHtml('success'); ?>
 <?php echo flashHtml('error'); ?>
 
-<form method="POST" action="edit_customer.php?id=<?php echo escape($id); ?>">
+<form method="POST" action="edit_customer.php?id=<?php echo rawOutput($id); ?>">
     <label class="label" for="customer_name">Name *</label>
-    <input class="input" type="text" id="customer_name" name="customer_name" value="<?php echo escape($customer['customer_name']); ?>" required>
+    <input class="input" type="text" id="customer_name" name="customer_name" value="<?php echo rawOutput($customer['customer_name']); ?>" required>
 
     <label class="label" for="email">Email *</label>
-    <input class="input" type="email" id="email" name="email" value="<?php echo escape($customer['email']); ?>" required>
+    <input class="input" type="email" id="email" name="email" value="<?php echo rawOutput($customer['email']); ?>" required>
 
     <label class="label" for="phone">Phone</label>
-    <input class="input" type="text" id="phone" name="phone" value="<?php echo escape($customer['phone']); ?>">
+    <input class="input" type="text" id="phone" name="phone" value="<?php echo rawOutput($customer['phone']); ?>">
 
     <input class="button" type="submit" value="Update Customer">
     <a class="link" href="view_customers.php">Cancel</a>

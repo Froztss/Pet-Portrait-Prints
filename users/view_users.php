@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/db_connect.php';
 requireAdmin();
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <h2>All Users</h2>
@@ -31,15 +32,15 @@ requireAdmin();
 
         foreach ($users as $user) {
             echo '<tr>';
-            echo '<td>' . escape($user['user_id']) . '</td>';
-            echo '<td>' . escape($user['username']) . '</td>';
-            echo '<td>' . escape($user['first_name'] . ' ' . $user['last_name']) . '</td>';
-            echo '<td>' . escape($user['email']) . '</td>';
-            echo '<td><span class="role-badge ' . escape($user['role']) . '">' . escape(ucfirst($user['role'])) . '</span></td>';
-            echo '<td>' . escape(formatDateTime($user['created_at'])) . '</td>';
+            echo '<td>' . rawOutput($user['user_id']) . '</td>';
+            echo '<td>' . rawOutput($user['username']) . '</td>';
+            echo '<td>' . rawOutput($user['first_name'] . ' ' . $user['last_name']) . '</td>';
+            echo '<td>' . rawOutput($user['email']) . '</td>';
+            echo '<td><span class="role-badge ' . rawOutput($user['role']) . '">' . rawOutput(ucfirst($user['role'])) . '</span></td>';
+            echo '<td>' . rawOutput(formatDateTime($user['created_at'])) . '</td>';
             echo '<td class="action-links">';
             if ($user['user_id'] !== currentUserId()) {
-                echo '<a class="link" href="delete_user.php?id=' . escape($user['user_id']) . '" onclick="return confirm(\'Delete this user?\');">Delete</a>';
+                echo '<a class="link" href="delete_user.php?id=' . rawOutput($user['user_id']) . '" onclick="return confirm(\'Delete this user?\');">Delete</a>';
             }
             echo '</td>';
             echo '</tr>';

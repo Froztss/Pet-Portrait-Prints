@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/includes/db_connect.php';
 
@@ -101,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if ($error): ?>
         <div class="flash flash-error">
-            <?php echo escape($error); ?>
+            <?php echo $error; ?>
         </div>
     <?php endif; ?>
 
@@ -211,8 +210,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </div>
 
-<?php require_once __DIR__ . '/includes/footer.php'; ?>
-
 <script>
 document.getElementById('registerForm').addEventListener('submit', function(e) {
     var btn = document.getElementById('registerBtn');
@@ -221,3 +218,5 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
     btn.value = '';
 });
 </script>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

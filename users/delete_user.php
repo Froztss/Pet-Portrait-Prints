@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/db_connect.php';
 requireAdmin();
 
 $id = $_GET['id'] ?? 0;
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: view_users.php');
         exit;
     } catch (PDOException $e) {
-        echo '<div class="flash flash-error">Error deleting user: ' . escape($e->getMessage()) . '</div>';
+        echo '<div class="flash flash-error">Error deleting user: ' . rawOutput($e->getMessage()) . '</div>';
     }
 }
 ?>
@@ -50,31 +50,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <table>
     <tr>
         <th>ID</th>
-        <td><?php echo escape($user['user_id']); ?></td>
+        <td><?php echo rawOutput($user['user_id']); ?></td>
     </tr>
     <tr>
         <th>Username</th>
-        <td><?php echo escape($user['username']); ?></td>
+        <td><?php echo rawOutput($user['username']); ?></td>
     </tr>
     <tr>
         <th>Name</th>
-        <td><?php echo escape($user['first_name'] . ' ' . $user['last_name']); ?></td>
+        <td><?php echo rawOutput($user['first_name'] . ' ' . $user['last_name']); ?></td>
     </tr>
     <tr>
         <th>Email</th>
-        <td><?php echo escape($user['email']); ?></td>
+        <td><?php echo rawOutput($user['email']); ?></td>
     </tr>
     <tr>
         <th>Role</th>
-        <td><span class="role-badge <?php echo escape($user['role']); ?>"><?php echo escape(ucfirst($user['role'])); ?></span></td>
+        <td><span class="role-badge <?php echo rawOutput($user['role']); ?>"><?php echo rawOutput(ucfirst($user['role'])); ?></span></td>
     </tr>
     <tr>
         <th>Created</th>
-        <td><?php echo escape($user['created_at']); ?></td>
+        <td><?php echo rawOutput($user['created_at']); ?></td>
     </tr>
 </table>
 
-<form method="POST" action="delete_user.php?id=<?php echo escape($id); ?>">
+<form method="POST" action="delete_user.php?id=<?php echo rawOutput($id); ?>">
     <input class="button" type="submit" value="Yes, Delete User" onclick="return confirm('Are you sure? This cannot be undone.');">
     <a class="link" href="view_users.php">Cancel</a>
 </form>

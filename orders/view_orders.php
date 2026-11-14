@@ -1,6 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/db_connect.php';
 requireAuth();
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <h2>All Orders</h2>
@@ -44,19 +45,19 @@ requireAuth();
         foreach ($orders as $order) {
             $rowClass = ($order['order_status'] === 'Completed') ? ' class="status-completed"' : '';
             echo '<tr' . $rowClass . '>';
-            echo '<td>' . escape($order['order_id']) . '</td>';
-            echo '<td>' . escape($order['customer_name']) . '</td>';
-            echo '<td>' . escape($order['pet_name']) . '</td>';
-            echo '<td>' . escape($order['pet_type']) . '</td>';
-            echo '<td>' . escape($order['portrait_style']) . '</td>';
-            echo '<td>' . escape(number_format($order['price'], 2)) . '</td>';
-            echo '<td>' . escape($order['order_status']) . '</td>';
-            echo '<td>' . escape($order['added_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . escape($order['updated_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . escape(formatDateTime($order['created_at'])) . '</td>';
+            echo '<td>' . rawOutput($order['order_id']) . '</td>';
+            echo '<td>' . rawOutput($order['customer_name']) . '</td>';
+            echo '<td>' . rawOutput($order['pet_name']) . '</td>';
+            echo '<td>' . rawOutput($order['pet_type']) . '</td>';
+            echo '<td>' . rawOutput($order['portrait_style']) . '</td>';
+            echo '<td>' . rawOutput(number_format($order['price'], 2)) . '</td>';
+            echo '<td>' . rawOutput($order['order_status']) . '</td>';
+            echo '<td>' . rawOutput($order['added_by_name'] ?? 'N/A') . '</td>';
+            echo '<td>' . rawOutput($order['updated_by_name'] ?? 'N/A') . '</td>';
+            echo '<td>' . rawOutput(formatDateTime($order['created_at'])) . '</td>';
             echo '<td class="action-links">';
-            echo '<a class="link" href="edit_order.php?id=' . escape($order['order_id']) . '">Edit</a>';
-            echo '<a class="link" href="delete_order.php?id=' . escape($order['order_id']) . '">Delete</a>';
+            echo '<a class="link" href="edit_order.php?id=' . rawOutput($order['order_id']) . '">Edit</a>';
+            echo '<a class="link" href="delete_order.php?id=' . rawOutput($order['order_id']) . '">Delete</a>';
             echo '</td>';
             echo '</tr>';
         }
