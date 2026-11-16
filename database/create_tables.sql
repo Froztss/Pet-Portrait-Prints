@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS customers (
     email          VARCHAR(150)  NOT NULL UNIQUE,
     phone          VARCHAR(20),
     added_by       INT,
-    updated_by     INT,
-    created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-    updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    last_updated_by INT,
+    date_added     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+    last_updated   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (customer_id),
     CONSTRAINT fk_customer_added_by
         FOREIGN KEY (added_by) REFERENCES users(user_id) ON DELETE SET NULL,
     CONSTRAINT fk_customer_updated_by
-        FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL
+        FOREIGN KEY (last_updated_by) REFERENCES users(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------
@@ -60,14 +60,14 @@ CREATE TABLE IF NOT EXISTS pet_portrait_orders (
     price          DECIMAL(10,2) NOT NULL,
     order_status   VARCHAR(30)   NOT NULL DEFAULT 'Pending',
     added_by       INT,
-    updated_by     INT,
-    created_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
-    updated_at     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    last_updated_by INT,
+    date_added     TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
+    last_updated   TIMESTAMP     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (order_id),
     CONSTRAINT fk_order_customer
         FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE,
     CONSTRAINT fk_order_added_by
         FOREIGN KEY (added_by) REFERENCES users(user_id) ON DELETE SET NULL,
     CONSTRAINT fk_order_updated_by
-        FOREIGN KEY (updated_by) REFERENCES users(user_id) ON DELETE SET NULL
+        FOREIGN KEY (last_updated_by) REFERENCES users(user_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

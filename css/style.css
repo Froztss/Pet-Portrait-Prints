@@ -171,6 +171,22 @@ form {
     margin-bottom: 20px;
 }
 
+.search-form {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.search-form .form-field {
+    flex: 1 1 260px;
+    max-width: 500px;
+}
+
+.search-form .input {
+    margin-bottom: 0;
+}
+
 .label {
     display: block;
     margin-bottom: 6px;

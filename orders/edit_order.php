@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("
             UPDATE pet_portrait_orders
-            SET customer_id = ?, pet_name = ?, pet_type = ?, portrait_style = ?, price = ?, order_status = ?, updated_by = ?
+            SET customer_id = ?, pet_name = ?, pet_type = ?, portrait_style = ?, price = ?, order_status = ?, last_updated_by = ?
             WHERE order_id = ?
         ");
         $stmt->execute([$customerId, $petName, $petType, $portraitStyle, $price, $orderStatus, currentUserId(), $id]);

@@ -1,6 +1,36 @@
 <?php
 require_once __DIR__ . '/../includes/db_connect.php';
 requireAuth();
+
+$search = trim($_GET['search'] ?? '');
+
+$orderQuery = "
+    SELECT o.*, c.customer_name, u1.username AS added_by_name, u2.username AS last_updated_by_name
+    FROM pet_portrait_orders o
+    JOIN customers c ON o.customer_id = c.customer_id
+    LEFT JOIN users u1 ON o.added_by = u1.user_id
+    LEFT JOIN users u2 ON o.last_updated_by = u2.user_id
+";
+
+if ($search !== '') {
+    $orderQuery .= "
+        WHERE c.customer_name LIKE ? OR o.pet_name LIKE ? OR o.pet_type LIKE ?
+            OR o.portrait_style LIKE ? OR o.order_status LIKE ?
+            OR CAST(o.order_id AS CHAR) LIKE ? OR CAST(o.customer_id AS CHAR) LIKE ?
+    ";
+}
+
+$orderQuery .= " ORDER BY o.order_id DESC";
+
+$stmt = $pdo->prepare($orderQuery);
+if ($search !== '') {
+    $searchTerm = '%' . $search . '%';
+    $stmt->execute(array_fill(0, 7, $searchTerm));
+} else {
+    $stmt->execute();
+}
+$orders = $stmt->fetchAll();
+
 require_once __DIR__ . '/../includes/header.php';
 ?>
 
@@ -8,6 +38,17 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php echo flashHtml('success'); ?>
 <?php echo flashHtml('error'); ?>
+
+<form class="search-form" method="GET" action="view_orders.php">
+    <div class="form-field">
+        <label class="label" for="order-search">Search orders</label>
+        <input class="input" type="search" id="order-search" name="search" value="<?php echo rawOutput($search); ?>" placeholder="Customer, pet, status, or ID">
+    </div>
+    <button type="submit">Search</button>
+    <?php if ($search !== ''): ?>
+        <a class="button" href="view_orders.php">Clear</a>
+    <?php endif; ?>
+</form>
 
 <table>
     <thead>
@@ -20,26 +61,17 @@ require_once __DIR__ . '/../includes/header.php';
             <th>Price</th>
             <th>Status</th>
             <th>Added By</th>
-            <th>Updated By</th>
-            <th>Created</th>
+            <th>Last Updated By</th>
+            <th>Date Added</th>
+            <th>Last Updated</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        // Get all orders with customer name and user info
-        $stmt = $pdo->query("
-            SELECT o.*, c.customer_name, u1.username AS added_by_name, u2.username AS updated_by_name
-            FROM pet_portrait_orders o
-            JOIN customers c ON o.customer_id = c.customer_id
-            LEFT JOIN users u1 ON o.added_by = u1.user_id
-            LEFT JOIN users u2 ON o.updated_by = u2.user_id
-            ORDER BY o.order_id DESC
-        ");
-        $orders = $stmt->fetchAll();
-
         if (count($orders) === 0) {
-            echo '<tr><td colspan="11" class="text-center">No orders found.</td></tr>';
+            $emptyMessage = $search === '' ? 'No orders found.' : 'No orders found matching "' . rawOutput($search) . '".';
+            echo '<tr><td colspan="12" class="text-center">' . $emptyMessage . '</td></tr>';
         }
 
         foreach ($orders as $order) {
@@ -53,8 +85,12 @@ require_once __DIR__ . '/../includes/header.php';
             echo '<td>' . rawOutput(number_format($order['price'], 2)) . '</td>';
             echo '<td>' . rawOutput($order['order_status']) . '</td>';
             echo '<td>' . rawOutput($order['added_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . rawOutput($order['updated_by_name'] ?? 'N/A') . '</td>';
-            echo '<td>' . rawOutput(formatDateTime($order['created_at'])) . '</td>';
+            $lastUpdatedBy = $order['last_updated_by'] === null
+                ? 'N/A'
+                : '#' . $order['last_updated_by'] . ' (' . ($order['last_updated_by_name'] ?? 'Unknown user') . ')';
+            echo '<td>' . rawOutput($lastUpdatedBy) . '</td>';
+            echo '<td>' . rawOutput(formatDateTime($order['date_added'])) . '</td>';
+            echo '<td>' . rawOutput(formatDateTime($order['last_updated'])) . '</td>';
             echo '<td class="action-links">';
             echo '<a class="link" href="edit_order.php?id=' . rawOutput($order['order_id']) . '">Edit</a>';
             echo '<a class="link" href="delete_order.php?id=' . rawOutput($order['order_id']) . '">Delete</a>';
